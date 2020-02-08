@@ -13,6 +13,10 @@ let deleteItem = document.querySelector('.fa');
 let clearItem = document.querySelector('.collection');
 
 
+// filter tasks
+
+let filter = document.querySelector('#filter');
+
 loadEventListeners();
 
 function loadEventListeners(){
@@ -22,6 +26,10 @@ function loadEventListeners(){
 
   // removing single item
   clearItem.addEventListener('click', removeElement);
+
+  // filter tasks
+
+  filter.addEventListener('keyup', filterTasks);
 
 }
 
@@ -38,6 +46,8 @@ function addTask(e){
   link.innerHTML = '<i class="fa fa-remove"></i>';
   liElement.appendChild(link);
   listItems.appendChild(liElement);
+
+  addTaskVal.value = '';
 
   
 
@@ -58,5 +68,21 @@ function removeTasks(e){
   while(listItems.firstChild){
     listItems.removeChild(listItems.firstChild);
   }
+
+}
+
+  function filterTasks(e){
+    let text = e.target.value.toLowerCase();
+    
+    document.querySelectorAll('.collection-item').forEach((task) => {
+      let item = task.firstChild.textContent;
+
+      if(item.toLowerCase().indexOf(text) != -1){
+        task.style.display = 'block';
+      }
+      else{
+        task.style.display = 'none';
+      }
+    });
 
   }
